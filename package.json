@@ -1,0 +1,55 @@
+{
+  "name": "winget-app-catalog",
+  "version": "1.0.0",
+  "description": "Browse and install Windows apps via winget — like a Microsoft Store for the command line",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "electron . --enable-logging",
+    "build": "electron-builder --win --publish never"
+  },
+  "keywords": [
+    "winget",
+    "windows",
+    "package-manager",
+    "electron"
+  ],
+  "author": "Caesium",
+  "license": "MIT",
+  "build": {
+    "appId": "com.caesium.winget-app-catalog",
+    "productName": "Winget App Catalog",
+    "copyright": "Copyright © 2026 Caesium",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "renderer/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Winget App Catalog"
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.0.0",
+    "electron-builder": "^26.18.0"
+  }
+}

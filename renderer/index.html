@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Winget App Catalog — browse and install apps for Windows" />
+  <title>Winget App Catalog</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- Custom title bar -->
+  <div id="titlebar">
+    <div id="titlebar-drag">
+      <svg class="titlebar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <rect x="2" y="2" width="9" height="9" rx="2" fill="#4f8ef7"/>
+        <rect x="13" y="2" width="9" height="9" rx="2" fill="#a855f7"/>
+        <rect x="2" y="13" width="9" height="9" rx="2" fill="#10b981"/>
+        <rect x="13" y="13" width="9" height="9" rx="2" fill="#f59e0b"/>
+      </svg>
+      <span id="titlebar-title">Winget App Catalog</span>
+    </div>
+    <div id="titlebar-controls">
+      <button id="btn-minimize" title="Minimize">
+        <svg width="10" height="1" viewBox="0 0 10 1"><rect width="10" height="1" fill="currentColor"/></svg>
+      </button>
+      <button id="btn-maximize" title="Maximize">
+        <svg width="10" height="10" viewBox="0 0 10 10"><rect x="0.5" y="0.5" width="9" height="9" rx="0.5" stroke="currentColor" fill="none"/></svg>
+      </button>
+      <button id="btn-close" title="Close">
+        <svg width="10" height="10" viewBox="0 0 10 10">
+          <line x1="1" y1="1" x2="9" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+          <line x1="9" y1="1" x2="1" y2="9" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- App shell -->
+  <div id="app-shell">
+
+    <!-- Sidebar -->
+    <nav id="sidebar">
+      <div id="nav-logo">
+        <svg class="nav-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect x="2" y="2" width="13" height="13" rx="3" fill="#4f8ef7"/>
+          <rect x="17" y="2" width="13" height="13" rx="3" fill="#a855f7"/>
+          <rect x="2" y="17" width="13" height="13" rx="3" fill="#10b981"/>
+          <rect x="17" y="17" width="13" height="13" rx="3" fill="#f59e0b"/>
+        </svg>
+      </div>
+
+      <ul id="nav-items">
+        <li class="nav-item active" data-page="home" id="nav-home" title="Home">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+            <polyline points="9,22 9,12 15,12 15,22"/>
+          </svg>
+          <span>Home</span>
+        </li>
+        <li class="nav-item" data-page="search" id="nav-search" title="Search">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <span>Search</span>
+        </li>
+        <li class="nav-item" data-page="library" id="nav-library" title="My Library">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
+            <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
+          </svg>
+          <span>Library</span>
+        </li>
+      </ul>
+
+      <div id="sidebar-bottom">
+        <div id="sidebar-version">v1.0.0</div>
+      </div>
+    </nav>
+
+    <!-- Main content area -->
+    <main id="content-area">
+
+      <!-- ── HOME PAGE ── -->
+      <section id="page-home" class="page active">
+        <div class="page-header">
+          <h1>Discover Apps</h1>
+          <p class="page-subtitle">Browse, search and install apps using Windows Package Manager</p>
+        </div>
+
+        <!-- Quick search on home -->
+        <div id="home-search-wrap">
+          <div class="search-box" id="home-search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="home-search-input" placeholder="Search for apps…" autocomplete="off" spellcheck="false" />
+          </div>
+        </div>
+
+        <!-- Categories -->
+        <div class="section-label">Browse Categories</div>
+        <div id="categories-grid">
+          <button class="category-chip active" data-query="browser">🌐 Browsers</button>
+          <button class="category-chip" data-query="code editor">💻 Dev Tools</button>
+          <button class="category-chip" data-query="media player">🎵 Media</button>
+          <button class="category-chip" data-query="game">🎮 Gaming</button>
+          <button class="category-chip" data-query="vpn">🔒 Security</button>
+          <button class="category-chip" data-query="office">📄 Productivity</button>
+          <button class="category-chip" data-query="image editor">🎨 Creative</button>
+          <button class="category-chip" data-query="downloader">⬇️ Utilities</button>
+        </div>
+
+        <!-- Featured apps -->
+        <div class="section-label">Featured Apps
+          <span id="featured-loading" class="spinner-small"></span>
+        </div>
+        <div id="featured-grid" class="apps-grid">
+          <!-- Populated by JS -->
+        </div>
+      </section>
+
+      <!-- ── SEARCH PAGE ── -->
+      <section id="page-search" class="page">
+        <div class="page-header">
+          <h1>Search</h1>
+        </div>
+
+        <div class="search-box" id="search-box-main">
+          <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="11" cy="11" r="8"/>
+            <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+          </svg>
+          <input type="text" id="search-input" placeholder="Search apps by name, publisher or ID…" autocomplete="off" spellcheck="false" />
+          <kbd class="search-kbd">Enter</kbd>
+        </div>
+
+        <div id="search-status"></div>
+
+        <div id="search-results" class="apps-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="search-empty" class="empty-state hidden">
+          <div class="empty-icon">🔍</div>
+          <div class="empty-title">No apps found</div>
+          <div class="empty-sub">Try a different search term</div>
+        </div>
+      </section>
+
+      <!-- ── LIBRARY PAGE ── -->
+      <section id="page-library" class="page">
+        <div class="page-header">
+          <h1>My Library</h1>
+          <p class="page-subtitle">Apps installed via winget on this machine</p>
+        </div>
+
+        <div id="library-toolbar">
+          <button id="refresh-library-btn" class="secondary-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-4.5"/>
+            </svg>
+            Refresh
+          </button>
+          <button id="check-updates-btn" class="update-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="16 3 21 3 21 8"/>
+              <line x1="4" y1="20" x2="21" y2="3"/>
+              <polyline points="21 16 21 21 16 21"/>
+              <line x1="15" y1="4" x2="4" y2="15"/>
+            </svg>
+            Check for Updates
+            <span id="update-count-badge" class="hidden"></span>
+          </button>
+        </div>
+
+        <div id="library-status" class="status-text"></div>
+        <div id="library-grid" class="apps-grid">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="library-empty" class="empty-state hidden">
+          <div class="empty-icon">📦</div>
+          <div class="empty-title">Library is empty</div>
+          <div class="empty-sub">No winget-managed apps detected</div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ── APP DETAIL MODAL ── -->
+  <div id="modal-overlay" class="hidden">
+    <div id="modal">
+      <button id="modal-close-btn" title="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+
+      <div id="modal-header">
+        <div id="modal-icon-wrap">
+          <div id="modal-app-icon"></div>
+        </div>
+        <div id="modal-title-block">
+          <h2 id="modal-app-name"></h2>
+          <div id="modal-app-id" class="mono"></div>
+          <div id="modal-meta">
+            <span id="modal-app-version" class="meta-tag"></span>
+            <span id="modal-app-source" class="meta-tag"></span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Version selector -->
+      <div id="version-selector-wrap">
+        <div id="version-selector-label">
+          Version
+          <span id="versions-loading" class="spinner-small hidden"></span>
+        </div>
+        <div class="select-wrap">
+          <select id="version-select">
+            <option value="">⬇ Latest (default)</option>
+          </select>
+          <svg class="select-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
+      </div>
+
+      <div id="modal-actions">
+        <button id="modal-install-btn" class="install-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Install
+        </button>
+        <button id="modal-update-btn" class="update-btn hidden" title="Update to latest version">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+            <polyline points="16 3 21 3 21 8"/>
+            <line x1="4" y1="20" x2="21" y2="3"/>
+            <polyline points="21 16 21 21 16 21"/>
+            <line x1="15" y1="4" x2="4" y2="15"/>
+          </svg>
+          Update
+        </button>
+        <button id="modal-uninstall-btn" class="danger-btn hidden" title="Uninstall this app">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <polyline points="3 6 5 6 21 6"/>
+            <path d="M19 6l-1 14H6L5 6"/>
+            <path d="M10 11v6"/><path d="M14 11v6"/>
+            <path d="M9 6V4h6v2"/>
+          </svg>
+          Uninstall
+        </button>
+        <button id="modal-copy-btn" class="secondary-btn" title="Copy install command">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <rect x="9" y="9" width="13" height="13" rx="2"/>
+            <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>
+          </svg>
+          Copy
+        </button>
+      </div>
+
+      <!-- Operation log console -->
+      <div id="install-console-wrap" class="hidden">
+        <div id="install-console-label">Output</div>
+        <pre id="install-console"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notifications -->
+  <div id="toast-container"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
