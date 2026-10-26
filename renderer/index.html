@@ -11,13 +11,14 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+
   <!-- Custom title bar -->
   <div id="titlebar">
     <div id="titlebar-drag">
-      <svg class="titlebar-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <rect x="2" y="2" width="9" height="9" rx="2" fill="#4f8ef7"/>
-        <rect x="13" y="2" width="9" height="9" rx="2" fill="#a855f7"/>
-        <rect x="2" y="13" width="9" height="9" rx="2" fill="#10b981"/>
+      <svg class="titlebar-icon" viewBox="0 0 24 24" fill="none">
+        <rect x="2"  y="2"  width="9" height="9" rx="2" fill="#4f8ef7"/>
+        <rect x="13" y="2"  width="9" height="9" rx="2" fill="#a855f7"/>
+        <rect x="2"  y="13" width="9" height="9" rx="2" fill="#10b981"/>
         <rect x="13" y="13" width="9" height="9" rx="2" fill="#f59e0b"/>
       </svg>
       <span id="titlebar-title">Winget App Catalog</span>
@@ -44,12 +45,13 @@
     <!-- Sidebar -->
     <nav id="sidebar">
       <div id="nav-logo">
-        <svg class="nav-logo-svg" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <rect x="2" y="2" width="13" height="13" rx="3" fill="#4f8ef7"/>
-          <rect x="17" y="2" width="13" height="13" rx="3" fill="#a855f7"/>
-          <rect x="2" y="17" width="13" height="13" rx="3" fill="#10b981"/>
+        <svg class="nav-logo-svg" viewBox="0 0 32 32" fill="none">
+          <rect x="2"  y="2"  width="13" height="13" rx="3" fill="#4f8ef7"/>
+          <rect x="17" y="2"  width="13" height="13" rx="3" fill="#a855f7"/>
+          <rect x="2"  y="17" width="13" height="13" rx="3" fill="#10b981"/>
           <rect x="17" y="17" width="13" height="13" rx="3" fill="#f59e0b"/>
         </svg>
+        <span class="nav-logo-text">App Catalog</span>
       </div>
 
       <ul id="nav-items">
@@ -67,12 +69,37 @@
           </svg>
           <span>Search</span>
         </li>
+        <li class="nav-item" data-page="updates" id="nav-updates" title="Updates">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="16 3 21 3 21 8"/>
+            <line x1="4" y1="20" x2="21" y2="3"/>
+            <polyline points="21 16 21 21 16 21"/>
+            <line x1="15" y1="4" x2="4" y2="15"/>
+          </svg>
+          <span>Updates</span>
+          <span id="updates-nav-badge" class="nav-badge hidden"></span>
+        </li>
         <li class="nav-item" data-page="library" id="nav-library" title="My Library">
           <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
             <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/>
             <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/>
           </svg>
           <span>Library</span>
+        </li>
+        <li class="nav-item" data-page="bundles" id="nav-bundles" title="Bundles">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="21 8 21 21 3 21 3 8"/>
+            <rect x="1" y="3" width="22" height="5"/>
+            <line x1="10" y1="12" x2="14" y2="12"/>
+          </svg>
+          <span>Bundles</span>
+        </li>
+        <li class="nav-item" data-page="history" id="nav-history" title="History">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <circle cx="12" cy="12" r="10"/>
+            <polyline points="12 6 12 12 16 14"/>
+          </svg>
+          <span>History</span>
         </li>
       </ul>
 
@@ -99,6 +126,7 @@
               <line x1="21" y1="21" x2="16.65" y2="16.65"/>
             </svg>
             <input type="text" id="home-search-input" placeholder="Search for apps…" autocomplete="off" spellcheck="false" />
+            <kbd class="search-kbd">Enter</kbd>
           </div>
         </div>
 
@@ -113,11 +141,15 @@
           <button class="category-chip" data-query="office">📄 Productivity</button>
           <button class="category-chip" data-query="image editor">🎨 Creative</button>
           <button class="category-chip" data-query="downloader">⬇️ Utilities</button>
+          <button class="category-chip" data-query="terminal">⬛ Terminal</button>
+          <button class="category-chip" data-query="communication">💬 Chat</button>
         </div>
 
         <!-- Featured apps -->
-        <div class="section-label">Featured Apps
-          <span id="featured-loading" class="spinner-small"></span>
+        <div class="section-label">
+          Featured Apps
+          <span id="featured-loading" class="spinner-small hidden"></span>
+          <button id="featured-refresh-btn" class="section-action-btn" title="Load different apps">⟳ Refresh</button>
         </div>
         <div id="featured-grid" class="apps-grid">
           <!-- Populated by JS -->
@@ -136,6 +168,7 @@
             <line x1="21" y1="21" x2="16.65" y2="16.65"/>
           </svg>
           <input type="text" id="search-input" placeholder="Search apps by name, publisher or ID…" autocomplete="off" spellcheck="false" />
+          <button id="search-clear-btn" class="search-clear hidden" title="Clear search">✕</button>
           <kbd class="search-kbd">Enter</kbd>
         </div>
 
@@ -148,7 +181,59 @@
         <div id="search-empty" class="empty-state hidden">
           <div class="empty-icon">🔍</div>
           <div class="empty-title">No apps found</div>
-          <div class="empty-sub">Try a different search term</div>
+          <div class="empty-sub">Try a different search term or check your spelling</div>
+        </div>
+
+        <div id="search-idle" class="empty-state">
+          <div class="empty-icon">🔎</div>
+          <div class="empty-title">Search for apps</div>
+          <div class="empty-sub">Type a name, publisher, or package ID and press Enter</div>
+        </div>
+      </section>
+
+      <!-- ── UPDATES PAGE ── -->
+      <section id="page-updates" class="page">
+        <div class="page-header">
+          <h1>Updates</h1>
+          <p class="page-subtitle">Check and install available updates for your apps</p>
+        </div>
+
+        <div id="updates-toolbar">
+          <button id="check-updates-page-btn" class="primary-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="1 4 1 10 7 10"/>
+              <path d="M3.51 15a9 9 0 1 0 .49-4.5"/>
+            </svg>
+            Check for Updates
+          </button>
+          <button id="update-all-btn" class="update-btn hidden">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <polyline points="16 3 21 3 21 8"/>
+              <line x1="4" y1="20" x2="21" y2="3"/>
+              <polyline points="21 16 21 21 16 21"/>
+              <line x1="15" y1="4" x2="4" y2="15"/>
+            </svg>
+            Update All
+            <span id="update-all-count"></span>
+          </button>
+        </div>
+
+        <div id="updates-status" class="status-text"></div>
+
+        <div id="updates-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="updates-empty" class="empty-state hidden">
+          <div class="empty-icon">✅</div>
+          <div class="empty-title">All apps are up to date</div>
+          <div class="empty-sub">Check again later for new updates</div>
+        </div>
+
+        <div id="updates-idle" class="empty-state">
+          <div class="empty-icon">🔄</div>
+          <div class="empty-title">Check for available updates</div>
+          <div class="empty-sub">Click "Check for Updates" to see what's available</div>
         </div>
       </section>
 
@@ -160,22 +245,19 @@
         </div>
 
         <div id="library-toolbar">
+          <div class="search-box search-box-sm" id="library-search-box">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="library-filter-input" placeholder="Filter installed apps…" autocomplete="off" spellcheck="false" />
+          </div>
           <button id="refresh-library-btn" class="secondary-btn">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
               <polyline points="1 4 1 10 7 10"/>
               <path d="M3.51 15a9 9 0 1 0 .49-4.5"/>
             </svg>
             Refresh
-          </button>
-          <button id="check-updates-btn" class="update-btn">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
-              <polyline points="16 3 21 3 21 8"/>
-              <line x1="4" y1="20" x2="21" y2="3"/>
-              <polyline points="21 16 21 21 16 21"/>
-              <line x1="15" y1="4" x2="4" y2="15"/>
-            </svg>
-            Check for Updates
-            <span id="update-count-badge" class="hidden"></span>
           </button>
         </div>
 
@@ -187,7 +269,71 @@
         <div id="library-empty" class="empty-state hidden">
           <div class="empty-icon">📦</div>
           <div class="empty-title">Library is empty</div>
-          <div class="empty-sub">No winget-managed apps detected</div>
+          <div class="empty-sub">No winget-managed apps detected on this system</div>
+        </div>
+      </section>
+
+      <!-- ── BUNDLES PAGE ── -->
+      <section id="page-bundles" class="page">
+        <div class="page-header">
+          <h1>App Bundles</h1>
+          <p class="page-subtitle">Save reusable collections of apps — install your setup on any machine</p>
+        </div>
+
+        <div id="bundles-toolbar">
+          <button id="create-bundle-btn" class="primary-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <line x1="12" y1="5" x2="12" y2="19"/>
+              <line x1="5" y1="12" x2="19" y2="12"/>
+            </svg>
+            New Bundle
+          </button>
+          <button id="import-bundle-btn" class="secondary-btn">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+            Import JSON
+          </button>
+        </div>
+
+        <div id="bundles-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="bundles-empty" class="empty-state hidden">
+          <div class="empty-icon">📦</div>
+          <div class="empty-title">No bundles yet</div>
+          <div class="empty-sub">Create a bundle to save a collection of apps for quick setup</div>
+        </div>
+      </section>
+
+      <!-- ── HISTORY PAGE ── -->
+      <section id="page-history" class="page">
+        <div class="page-header">
+          <h1>Operation History</h1>
+          <p class="page-subtitle">Recent installations, updates, and removals</p>
+        </div>
+
+        <div id="history-toolbar">
+          <button id="clear-history-btn" class="danger-btn-sm">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="14" height="14">
+              <polyline points="3 6 5 6 21 6"/>
+              <path d="M19 6l-1 14H6L5 6"/>
+            </svg>
+            Clear History
+          </button>
+        </div>
+
+        <div id="history-list">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="history-empty" class="empty-state hidden">
+          <div class="empty-icon">📋</div>
+          <div class="empty-title">No history yet</div>
+          <div class="empty-sub">Install, update, or remove apps to see them here</div>
         </div>
       </section>
 
@@ -214,8 +360,20 @@
           <div id="modal-meta">
             <span id="modal-app-version" class="meta-tag"></span>
             <span id="modal-app-source" class="meta-tag"></span>
+            <span id="modal-app-publisher" class="meta-tag hidden"></span>
           </div>
         </div>
+      </div>
+
+      <!-- Description row (from winget show) -->
+      <div id="modal-description" class="hidden"></div>
+
+      <!-- Add to bundle quick-action -->
+      <div id="modal-bundle-row">
+        <select id="modal-bundle-select" class="bundle-select">
+          <option value="">Add to bundle…</option>
+        </select>
+        <button id="modal-add-to-bundle-btn" class="secondary-btn-sm">Add</button>
       </div>
 
       <!-- Version selector -->
@@ -270,8 +428,74 @@
 
       <!-- Operation log console -->
       <div id="install-console-wrap" class="hidden">
-        <div id="install-console-label">Output</div>
+        <div id="install-console-header">
+          <div id="install-console-label">Output</div>
+          <div class="console-actions">
+            <button id="console-copy-btn" class="console-btn" title="Copy output">Copy</button>
+            <button id="console-clear-btn" class="console-btn" title="Clear output">Clear</button>
+          </div>
+        </div>
         <pre id="install-console"></pre>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── BUNDLE EDITOR MODAL ── -->
+  <div id="bundle-modal-overlay" class="hidden">
+    <div id="bundle-modal">
+      <button id="bundle-modal-close-btn" title="Close">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" width="18" height="18">
+          <line x1="18" y1="6" x2="6" y2="18"/>
+          <line x1="6" y1="6" x2="18" y2="18"/>
+        </svg>
+      </button>
+      <h2 id="bundle-modal-title">New Bundle</h2>
+
+      <div class="form-group">
+        <label for="bundle-name-input">Bundle Name</label>
+        <input type="text" id="bundle-name-input" placeholder="e.g. Developer Setup" maxlength="60" />
+      </div>
+
+      <div class="form-group">
+        <label>Apps in Bundle</label>
+        <div id="bundle-apps-list"></div>
+        <div class="bundle-add-row">
+          <div class="search-box search-box-sm" style="flex:1">
+            <svg class="search-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="11" cy="11" r="8"/>
+              <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+            </svg>
+            <input type="text" id="bundle-app-search-input" placeholder="Search and add apps…" autocomplete="off" spellcheck="false" />
+          </div>
+          <button id="bundle-app-search-btn" class="secondary-btn">Search</button>
+        </div>
+        <div id="bundle-search-results"></div>
+      </div>
+
+      <div id="bundle-modal-actions">
+        <button id="bundle-save-btn" class="install-btn">Save Bundle</button>
+        <button id="bundle-export-btn" class="secondary-btn">Export JSON</button>
+        <button id="bundle-install-all-btn" class="update-btn">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" width="16" height="16">
+            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+            <polyline points="7 10 12 15 17 10"/>
+            <line x1="12" y1="15" x2="12" y2="3"/>
+          </svg>
+          Install All
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CONFIRM DIALOG ── -->
+  <div id="confirm-overlay" class="hidden">
+    <div id="confirm-dialog">
+      <div id="confirm-icon">⚠️</div>
+      <div id="confirm-title"></div>
+      <div id="confirm-message"></div>
+      <div id="confirm-actions">
+        <button id="confirm-cancel-btn" class="secondary-btn">Cancel</button>
+        <button id="confirm-ok-btn" class="danger-btn">Confirm</button>
       </div>
     </div>
   </div>

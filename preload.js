@@ -8,16 +8,17 @@ contextBridge.exposeInMainWorld('api', {
   isMaximized: () => ipcRenderer.invoke('window:isMaximized'),
 
   // Winget queries
-  search:     (query)         => ipcRenderer.invoke('winget:search', query),
-  list:       ()              => ipcRenderer.invoke('winget:list'),
-  featured:   ()              => ipcRenderer.invoke('winget:featured'),
-  versions:   (id)            => ipcRenderer.invoke('winget:versions', id),
-  upgradable: ()              => ipcRenderer.invoke('winget:upgradable'),
+  search:     (query)        => ipcRenderer.invoke('winget:search', query),
+  show:       (id)           => ipcRenderer.invoke('winget:show', id),
+  list:       ()             => ipcRenderer.invoke('winget:list'),
+  featured:   (query)        => ipcRenderer.invoke('winget:featured', query),
+  versions:   (id)           => ipcRenderer.invoke('winget:versions', id),
+  upgradable: ()             => ipcRenderer.invoke('winget:upgradable'),
 
   // Winget actions (streaming)
-  install:    (id, version)   => ipcRenderer.invoke('winget:install', id, version),
-  uninstall:  (id)            => ipcRenderer.invoke('winget:uninstall', id),
-  upgrade:    (id)            => ipcRenderer.invoke('winget:upgrade', id),
+  install:    (id, version)  => ipcRenderer.invoke('winget:install', id, version),
+  uninstall:  (id)           => ipcRenderer.invoke('winget:uninstall', id),
+  upgrade:    (id)           => ipcRenderer.invoke('winget:upgrade', id),
 
   // Streaming events — install
   onProgress:          (cb) => ipcRenderer.on('install:progress',   (_e, d) => cb(d)),
@@ -28,4 +29,12 @@ contextBridge.exposeInMainWorld('api', {
   // Streaming events — upgrade
   onUpgradeProgress:   (cb) => ipcRenderer.on('upgrade:progress',   (_e, d) => cb(d)),
   onUpgradeDone:       (cb) => ipcRenderer.on('upgrade:done',       (_e, d) => cb(d)),
+
+  // History
+  getHistory:   ()        => ipcRenderer.invoke('history:get'),
+  clearHistory: ()        => ipcRenderer.invoke('history:clear'),
+
+  // Bundles
+  getBundles:  ()         => ipcRenderer.invoke('bundles:get'),
+  saveBundles: (bundles)  => ipcRenderer.invoke('bundles:save', bundles),
 });
